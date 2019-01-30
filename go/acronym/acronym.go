@@ -1,4 +1,4 @@
-// Package acronym exposes functions to turn strings into acronyms
+// Package acronym abbreviates phrases
 package acronym
 
 import (
@@ -6,13 +6,13 @@ import (
 	"strings"
 )
 
-// Abbreviate turns a string into its acronym:
-// Abbreviate("read the friendly manual") -> "RTFM"
+// Abbreviate turns a phrase into its acronym
 func Abbreviate(s string) string {
-	acronym := ""
-	words := strings.Split(regexp.MustCompile("[^\\w^\\s^\\-^\\_]").ReplaceAllString(s, ""), " ")
+	re := regexp.MustCompile(`[\s\-]+`)
+	words := re.Split(s, -1)
+	result := ""
 	for _, word := range words {
-		acronym += string(word[0])
+		result += strings.ToUpper(word[0:1])
 	}
-	return strings.ToUpper(acronym)
+	return result
 }
